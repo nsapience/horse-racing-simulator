@@ -9,7 +9,7 @@ public class FinalProject {
     
     public FinalProject(){
         ui = new UI();
-        window = ui.makePanel(1, 1, 160, 70);
+        window = ui.makePanel(1, 1, 130, 50);
         pg = new preGame(window);
     }
 
@@ -23,12 +23,6 @@ public class FinalProject {
         window.println("Meet your horse.");
         ui.wait(1200);
         window.resetTextBox();
-        window.println("*** RACE CONTROLS ***", TextColor.ANSI.YELLOW);
-        window.println("1 = slow down and save energy");
-        window.println("2 = speed up and risk more energy");
-        window.println("Enter = keep steady pace");
-        window.println("");
-        window.input("Press enter to begin the race");
 
         ui.clear();
         ui.refresh();
@@ -55,6 +49,13 @@ public class FinalProject {
 
         ui.clear();
         ui.refresh();
+
+        window.println("*** RACE CONTROLS ***", TextColor.ANSI.YELLOW);
+        window.println("1 = slow down and save energy");
+        window.println("2 = speed up and risk more energy");
+        window.println("Enter = keep steady pace");
+        window.println("");
+        window.input("Press enter to begin the race");
 
         race();
 
@@ -189,7 +190,7 @@ public class FinalProject {
 
                 screen(rm,count,rm.getPosition(),h1,h2,h3,h4,ho,message);
 
-                ui.wait(350);
+                ui.wait(500);
             }
 
             if (!result.equals("")) {
@@ -216,7 +217,10 @@ public class FinalProject {
         }
 
         if (again.equals("y")) {
-            startGame();
+            ui.stopUI();
+
+            FinalProject newGame = new FinalProject();
+            newGame.startGame();
         }
         else {
             ui.stopUI();

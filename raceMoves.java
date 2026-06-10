@@ -35,9 +35,8 @@ public class raceMoves {
             speed += horse.getStamina();
         }
 
-        // starting energy based on stamina and strength
-        this.energy = (horse.getStamina() * 40) + (horse.getStrength() * 15);
-
+        // starting energy depends on stamina, strength, and training exhaustion
+        this.energy = 400 + (horse.getStamina() * 45) + (horse.getStrength() * 20) - pregame.getExhaust();
         fixBounds();
         this.dqChance = (int) pregame.calcInjuryRisk();
         this.injrPos = rand.nextInt(300,1000);
@@ -78,8 +77,8 @@ public class raceMoves {
         fixBounds();
     }
     public String injuryWarning(){
-        // warns player when close to injury danger point
-        if(position >= injrPos - 150 && position < injrPos){
+        // warn only when injury can actually happen soon
+        if ((dqChance == 4 || dqChance == 5) && energy <= 150 && energy > 100) {
             return "Injury risk rising. Slow down soon.";
         }
 
@@ -87,13 +86,13 @@ public class raceMoves {
     }
     
     public String injure(){
-    // injury happens only for high-risk horses with low energy
-    if ((dqChance == 4 || dqChance == 5) && energy <= 100) {
-        return "Horse injured. Game Over.";
-    }
+        // high-risk horses are injured when energy gets too low
+        if ((dqChance == 4 || dqChance == 5) && energy <= 100) {
+            injured = true;
+            return "Horse injured. Game Over.";
+        }
 
-    return "";
-
+        return "";
     }
 
     public void speed(String i){
@@ -121,7 +120,7 @@ public class raceMoves {
 
     public void exhaust(String i){
         double drainAmt = ((speed * 0.8) - (horse.getStamina() * 0.3) - (horse.getStrength() * 0.2)) 
-                * (pregame.getExhaust() / 40.0);
+                * (pregame.getExhaust() / 70.0);
         
         if (drainAmt < 1) {
             drainAmt = 1;
@@ -213,10 +212,10 @@ public class raceMoves {
 }
     public String warning(){
         // gives race advice based on current race condition
-        if (energy < 100) {
+        if (position > 200 && energy < 100) {
             return "WARNING: Energy is critical. Slow down soon.";
         }
-        else if (energy < 180) {
+        else if (position > 200 && energy < 180) {
             return "Caution: Energy is dropping. Consider conserving pace.";
         }
         else if (position > 300 && pregame.getExhaust() > 60 && speed > 20) {
@@ -235,18 +234,24 @@ public class raceMoves {
     public String motion(String i, int[] h){
         speed(i);
         move(i);
-        // end immediately if player has no energy
-        if(checkEnergy()) return "You ran out of energy";
-        if(checkPositions(h)){
-            if(checkWin(h)) return "YOU WIN! You were first to reach the finish line!";
-            else if(checkOtherWin(h)) return "Opponent won. Other player reached finish line.";
+
+        String injuryMessage = injure();
+
+        if (!injuryMessage.equals("")) {
+            return injuryMessage;
         }
 
-        injure();
-        //if(checkEnergy()) return "You ran out of energy";
-        
-        if(injured){
-            return "Horse injured. Game Over.";
+        if(checkEnergy()) {
+            return "You ran out of energy";
+        }
+
+        if(checkPositions(h)){
+            if(checkWin(h)) {
+                return "YOU WIN! You were first to reach the finish line!";
+            }
+            else if(checkOtherWin(h)) {
+                return "Opponent won. Other player reached finish line.";
+            }
         }
 
         return "";
