@@ -131,83 +131,91 @@ public class preGame{
     // creates the display and handles user inputs for the beginning of the game
     public void trainHorseUI(UI ui) {
         window.resetTextBox();
-        window.println("Choose your training focus:");
-        window.println("1) strength");
-        window.println("2) stamina");
-        window.println("3) speed");
-    
-        trainingFocus = window.input("Enter choice: ").toLowerCase();
-        // make sure the user is not training a maxed-out stat
-        boolean validFocus = false;
 
-        while (!validFocus) {
+        int totalHoursUsed = 0;
+        boolean keepTraining = true;
 
-            if (trainingFocus.equals("1") && horseStats.getStrength() == 10) {
-                window.println("Strength is already maxed out. Choose another focus.", TextColor.ANSI.RED);
-                trainingFocus = window.input("Enter choice: ");
-            }
+        while (keepTraining && totalHoursUsed < 20) {
 
-            else if (trainingFocus.equals("2") && horseStats.getStamina() == 10) {
-                window.println("Stamina is already maxed out. Choose another focus.", TextColor.ANSI.RED);
-                trainingFocus = window.input("Enter choice: ");
-            }
+            int oldSpeed = horseStats.getSpeed();
+            int oldStamina = horseStats.getStamina();
+            int oldStrength = horseStats.getStrength();
 
-            else if (trainingFocus.equals("3") && horseStats.getSpeed() == 10) {
-                window.println("Speed is already maxed out. Choose another focus.", TextColor.ANSI.RED);
-                trainingFocus = window.input("Enter choice: ");
-            }
+            window.println("Choose your training focus:");
+            window.println("1) strength");
+            window.println("2) stamina");
+            window.println("3) speed");
 
-            else {
-                validFocus = true;
-            }
-        }
-        // check if it is valid
-        while (!trainingFocus.equals("1") && !trainingFocus.equals("2") && !trainingFocus.equals("3")) {
-            window.println("Invalid choice. Enter 1, 2, or 3:", TextColor.ANSI.RED);
             trainingFocus = window.input("Enter choice: ").toLowerCase();
-            
-        }
-    
-        window.println("How many hours? 0 to 20");
-        hoursTrained = Integer.parseInt(window.input("Hours: "));
-        while (hoursTrained < 0 || hoursTrained > 20) {
-            window.println("Invalid number. Enter 0 to 20:", TextColor.ANSI.RED);
-            hoursTrained = Integer.parseInt(window.input("Hours: "));
-        }
-        
-        if (hoursTrained == 0) {
-            window.println("No training selected.");
-        } else {
-            window.println("Your horse is being trained...");
-            ui.refresh();
-            ui.wait(hoursTrained * 300);
 
-            window.println("Training complete!", TextColor.ANSI.GREEN);
+            while (!trainingFocus.equals("1") && !trainingFocus.equals("2") && !trainingFocus.equals("3")) {
+                window.println("Invalid choice. Enter 1, 2, or 3:", TextColor.ANSI.RED);
+                trainingFocus = window.input("Enter choice: ").toLowerCase();
+            }
+
+            int hoursLeft = 20 - totalHoursUsed;
+
+            window.println("How many hours? 0 to " + hoursLeft);
+            int currentHours = Integer.parseInt(window.input("Hours: "));
+
+            while (currentHours < 0 || currentHours > hoursLeft) {
+                window.println("Invalid number. Enter 0 to " + hoursLeft + ":", TextColor.ANSI.RED);
+                currentHours = Integer.parseInt(window.input("Hours: "));
+            }
+
+            if (currentHours == 0) {
+                window.println("No training selected.");
+            }
+            else {
+                hoursTrained = currentHours;
+                trainingIntensity = calcTrainingIntensity();
+
+                window.println("Your horse is being trained...");
+                ui.refresh();
+                ui.wait(currentHours * 300);
+
+                horseStats.trainStat(trainingFocus, currentHours, trainingIntensity);
+
+                totalHoursUsed += currentHours;
+
+                int newSpeed = horseStats.getSpeed();
+                int newStamina = horseStats.getStamina();
+                int newStrength = horseStats.getStrength();
+
+                window.println("Training complete!", TextColor.ANSI.GREEN);
+
+                if (trainingFocus.equals("1")) {
+                    window.println("Strength: " + oldStrength + " -> " + newStrength);
+                }
+                else if (trainingFocus.equals("2")) {
+                    window.println("Stamina: " + oldStamina + " -> " + newStamina);
+                }
+                else {
+                    window.println("Speed: " + oldSpeed + " -> " + newSpeed);
+                }
+
+                window.println("Hours used: " + totalHoursUsed + " / 20");
+            }
+
+            if (totalHoursUsed < 20) {
+                String again = window.input("Train another skill? y/n: ").toLowerCase();
+
+                while (!again.equals("y") && !again.equals("n")) {
+                    again = window.input("Enter y or n: ").toLowerCase();
+                }
+
+                if (again.equals("n")) {
+                    keepTraining = false;
+                }
+
+                window.resetTextBox();
+            }
         }
-    
+
+        hoursTrained = totalHoursUsed;
         trainingIntensity = calcTrainingIntensity();
         exhaustion = calcExhaustion();
         injuryRisk = calcInjuryRisk();
-    
-        // get old and new abilities to show improvement for the horse after training
-        int oldSpeed = horseStats.getSpeed();
-        int oldStamina = horseStats.getStamina();
-        int oldStrength = horseStats.getStrength();
-        horseStats.trainStat(trainingFocus, hoursTrained, trainingIntensity);
-        int newSpeed = horseStats.getSpeed();
-        int newStamina = horseStats.getStamina();
-        int newStrength = horseStats.getStrength();
-        
-        // shows improvement for each trait
-        if (trainingFocus.equals("1")) {
-        window.println("Strength: " + oldStrength + " -> " + newStrength);
-        }
-        else if (trainingFocus.equals("2")) {
-            window.println("Stamina: " + oldStamina + " -> " + newStamina);
-        }
-        else {
-            window.println("Speed: " + oldSpeed + " -> " + newSpeed);
-        }
 
         window.input("Press enter to see updated card");
         window.resetTextBox();
