@@ -8,7 +8,7 @@ public class FinalProject {
     private String racerName;
     
     public FinalProject(){
-        ui = new UI();
+        ui = new UI(160, 60);
         window = ui.makePanel(1, 1, 130, 50);
         pg = new preGame(window);
     }
