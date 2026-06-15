@@ -8,7 +8,7 @@ public class FinalProject {
     private String racerName;
     
     public FinalProject(){
-        ui = new UI(160, 60);
+        ui = new UI(140, 55);
         window = ui.makePanel(1, 1, 130, 50);
         pg = new preGame(window);
     }
@@ -47,8 +47,6 @@ public class FinalProject {
         pg.trackAssign();
         pg.raceSetupUI(ui);
 
-        ui.clear();
-        ui.refresh();
 
         window.println("*** RACE CONTROLS ***", TextColor.ANSI.YELLOW);
         window.println("1 = slow down and save energy");
