@@ -41,8 +41,8 @@ public class FinalProject {
 
         race.competitors(window);
 
-        ui.clear();
-        ui.refresh();
+        // ui.clear();
+        // ui.refresh();
 
         pg.trackAssign();
         pg.raceSetupUI(ui);
