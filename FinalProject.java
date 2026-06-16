@@ -29,8 +29,8 @@ public class FinalProject {
 
         pg.displayCardUI(ui);
 
-        ui.clear();
-        ui.refresh();
+        //ui.clear();
+        //ui.refresh();
 
         pg.trainHorseUI(ui);
 

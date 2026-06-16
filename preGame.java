@@ -130,7 +130,7 @@ public class preGame{
     }
     // creates the display and handles user inputs for the beginning of the game
     public void trainHorseUI(UI ui) {
-        window.resetTextBox();
+        //window.resetTextBox();
 
         int totalHoursUsed = 0;
         boolean keepTraining = true;
