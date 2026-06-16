@@ -15,13 +15,13 @@ public class FinalProject {
 
     public void startGame() {
 
-        window.println("-----------------------------------");
-        window.println("       WELCOME TO HORSE RACING!    ");
-        window.println("-----------------------------------");
+        window.println("-----------------------------------", TextColor.ANSI.BLUE_BRIGHT);
+        window.println("       WELCOME TO HORSE RACING!    ", TextColor.ANSI.MAGENTA_BRIGHT);
+        window.println("-----------------------------------", TextColor.ANSI.BLUE_BRIGHT);
         racerName = window.input("What is your name? ");
         window.println("Hello " + racerName + "!");
         window.println("Meet your horse.");
-        ui.wait(1200);
+        ui.wait(2000);
         window.resetTextBox();
 
         ui.clear();
@@ -67,7 +67,8 @@ public class FinalProject {
     public void printStats(raceMoves rm,int[] h, String message){
         // show the user their stats 
         window.println("");
-        window.println("Current Stats:");
+        window.println("Current Stats:", TextColor.ANSI.MAGENTA_BRIGHT);
+        window.println("    Place:    " + rm.place(h));
         window.println("    Position: "+ rm.getPosition());
         window.println("    Speed:    "+ rm.getSpeed());
         window.println("    Energy:   "+ rm.getEnergy());

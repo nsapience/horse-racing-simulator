@@ -18,7 +18,7 @@ public class Competitors {
             if(positions[i-1] > 1600)
                 positions[i] = positions[i-1];
             else{
-                int plus = rand.nextInt(8,30);
+                int plus = rand.nextInt(5,40);
                 if(positions[i-1] + plus >1600)
                     positions[i] = 1600;
                 else{

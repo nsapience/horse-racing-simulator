@@ -231,6 +231,15 @@ public class raceMoves {
             return "Muddy track: strength helps resist energy loss.";
         }
     }
+    public String placeText(int[] h){
+        int p = place(h);
+    
+        if(p == 1) return "1st";
+        if(p == 2) return "2nd";
+        if(p == 3) return "3rd";
+    
+        return p + "th";
+    }
     public String motion(String i, int[] h){
         speed(i);
         move(i);

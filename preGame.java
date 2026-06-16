@@ -208,7 +208,7 @@ public class preGame{
                     keepTraining = false;
                 }
 
-                window.resetTextBox();
+                //window.resetTextBox();
             }
         }
 
