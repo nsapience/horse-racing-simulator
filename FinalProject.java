@@ -69,7 +69,7 @@ public class FinalProject {
         window.println("");
         window.println("Current Stats:", TextColor.ANSI.MAGENTA_BRIGHT);
         window.println("    Place:    " + rm.place(h));
-        window.println("    Position: "+ rm.getPosition());
+        window.println("    Position: "+ rm.getPosition(), TextColor.ANSI.GREEN);
         window.println("    Speed:    "+ rm.getSpeed());
         window.println("    Energy:   "+ rm.getEnergy());
         window.println("");

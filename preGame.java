@@ -126,7 +126,7 @@ public class preGame{
         }
         window.println("");
         window.input("Press enter to continue to the race");
-        window.resetTextBox();
+        //window.resetTextBox();
     }
     // creates the display and handles user inputs for the beginning of the game
     public void trainHorseUI(UI ui) {
