@@ -227,6 +227,12 @@ public class preGame{
         exhaustion = calcExhaustion();
         injuryRisk = calcInjuryRisk();
 
+        if (totalHoursUsed == 0){
+            window.println("No training was selected. Horse card remains unchanged.");
+            window.input("Press enter to continue");
+            window.resetTextBox();
+            return;
+        }
         window.input("Press enter to see updated card");
         window.resetTextBox();
     }
@@ -247,7 +253,7 @@ public class preGame{
             window.println("                    |_>|     /_] //", horseColor);
             window.println("                     /_]        /_] ", horseColor);
         }
-        else{
+        else if (hoursTrained > 0){
             window.println("*** UPDATED HORSE STATS ***",TextColor.ANSI.GREEN);
         }
         
