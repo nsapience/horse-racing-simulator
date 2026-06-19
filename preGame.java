@@ -145,14 +145,20 @@ public class preGame{
             window.println("1) strength");
             window.println("2) stamina");
             window.println("3) speed");
+            window.println("4) No training");
 
             trainingFocus = window.input("Enter choice: ").toLowerCase();
 
-            while (!trainingFocus.equals("1") && !trainingFocus.equals("2") && !trainingFocus.equals("3")) {
-                window.println("Invalid choice. Enter 1, 2, or 3:", TextColor.ANSI.RED);
+            while (!trainingFocus.equals("1") && !trainingFocus.equals("2") && !trainingFocus.equals("3") && !trainingFocus.equals("4")) {
+                window.println("Invalid choice. Enter 1, 2, 3, or 4:", TextColor.ANSI.RED);
                 trainingFocus = window.input("Enter choice: ").toLowerCase();
             }
+            if(trainingFocus.equals("4")){
+                window.println("No training selected.");
+                keepTraining = false; // exit the training loop
+            }
 
+            else {
             int hoursLeft = 20 - totalHoursUsed;
 
             window.println("How many hours? 0 to " + hoursLeft);
@@ -185,16 +191,19 @@ public class preGame{
                 window.println("Training complete!", TextColor.ANSI.GREEN);
 
                 if (trainingFocus.equals("1")) {
-                    window.println("Strength: " + oldStrength + " -> " + newStrength);
+                    window.println("Strength: " + oldStrength + " -> " + newStrength, TextColor.ANSI.BLUE_BRIGHT);
                 }
                 else if (trainingFocus.equals("2")) {
-                    window.println("Stamina: " + oldStamina + " -> " + newStamina);
+                    window.println("Stamina: " + oldStamina + " -> " + newStamina, TextColor.ANSI.BLUE_BRIGHT);
                 }
-                else {
-                    window.println("Speed: " + oldSpeed + " -> " + newSpeed);
+                else if (trainingFocus.equals("3")) {
+                    window.println("Speed: " + oldSpeed + " -> " + newSpeed, TextColor.ANSI.BLUE_BRIGHT);
+                }
+                else{
+                    window.println("No training selected.");
                 }
 
-                window.println("Hours used: " + totalHoursUsed + " / 20");
+                window.println("Hours used: " + totalHoursUsed + " / 20", TextColor.ANSI.RED);
             }
 
             if (totalHoursUsed < 20) {
@@ -210,6 +219,7 @@ public class preGame{
 
                 //window.resetTextBox();
             }
+        }
         }
 
         hoursTrained = totalHoursUsed;
