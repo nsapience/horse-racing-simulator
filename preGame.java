@@ -154,7 +154,7 @@ public class preGame{
                 trainingFocus = window.input("Enter choice: ").toLowerCase();
             }
             if(trainingFocus.equals("4")){
-                window.println("No training selected.");
+                //window.println("No training selected.");
                 keepTraining = false; // exit the training loop
             }
 
