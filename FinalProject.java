@@ -111,7 +111,7 @@ public class FinalProject {
         boolean raceOver = false;
 
         // race intro
-        window.resetTextBox();
+        
         window.println("*** WELCOME TO THE TRACK! ***", TextColor.ANSI.YELLOW);
         window.println("");
         window.println("The horses are lined up at the gate.");
