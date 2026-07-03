@@ -208,12 +208,15 @@ public class preGame{
 
             if (totalHoursUsed < 20) {
                 String again = window.input("Train another skill? y/n: ").toLowerCase();
+                window.resetTextBox();
 
                 while (!again.equals("y") && !again.equals("n")) {
+                    window.resetTextBox();
                     again = window.input("Enter y or n: ").toLowerCase();
                 }
 
                 if (again.equals("n")) {
+                    window.resetTextBox();
                     keepTraining = false;
                 }
 
