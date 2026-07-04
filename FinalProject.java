@@ -179,7 +179,7 @@ public class FinalProject {
                 
                     // if player is out of energy, end race now
                     if(rm.getEnergy() <= 0){
-                        result = "You ran out of energy";
+                        result = "You ran out of energy!";
                     }
                     else{
                         result = "";
