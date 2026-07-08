@@ -6,7 +6,6 @@ public class FinalProject {
     private raceUI race = new raceUI();
     private UI.Panel window;
     private String racerName;
-    private static final int RACE_DISTANCE = 1000; // meters
     public FinalProject(){
         ui = new UI(140, 55);
         window = ui.makePanel(1, 1, 130, 50);
@@ -69,7 +68,7 @@ public class FinalProject {
         window.println("");
         window.println("Current Stats:", TextColor.ANSI.MAGENTA_BRIGHT);
         window.println("    Place:    " + rm.place(h));
-        window.println("    Distance: " +getDistanceMeters(rm) +" / " +RACE_DISTANCE +" m");
+        window.println("    Raw Position: " + rm.getPosition()+" / 1600m");
         window.println("    Speed:    "+ rm.getSpeed());
         window.println("    Energy:   "+ rm.getEnergy());
         window.println("");
@@ -224,9 +223,6 @@ public class FinalProject {
         else {
             ui.stopUI();
         }
-    }
-    public int getDistanceMeters(raceMoves rm) {
-        return (int)((rm.getPosition() / 295.0) * RACE_DISTANCE);
     }
 
     public void showPostRaceSummary(raceMoves rm, int[] ho, String result, int checkpointsUsed, int maxChoices) {
