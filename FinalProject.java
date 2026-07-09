@@ -52,7 +52,7 @@ public class FinalProject {
         window.println("2 = speed up and risk more energy");
         window.println("Enter = keep steady pace");
         window.println("");
-        window.input("Press enter to begin the race");
+        //window.input("Press enter to begin the race");
 
         race();
 
